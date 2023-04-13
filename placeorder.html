@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+</head>
+<!-- <link rel="stylesheet" href="/styles/dropdown.css"> -->
+<link rel="stylesheet" href="./styles/index.css" />
+    
+    <link rel="stylesheet" href="./styles/cart.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+
+<body>
+
+    <div id="discount">GET RS 50 OFF ON ORDERS ABOVE RS 100</div>
+    <nav class="navbar">
+        <div class="top-nav">
+          <div class="logo">
+            <a href="./index.html"><img src="./2.logos.jpg" alt=""></a>
+          </div>
+          <div class="search-bar">
+            <div class="title">SEARCH</div>
+            <input type="search" name="" id="search" placeholder="Search here for products in Kolkata">
+            <div class="search-icon">
+                <i class="fa fa-search" id="search-btn"></i>
+            </div>
+          </div>
+           <div class="nav-buttons">
+            <a href="/sign.html" id="sign-in"><i class="fa fa-user"></i> Sign In / Register</a>
+             <a href="./wishlist.html"> <i class="fa-regular fa-heart"></i> Wishlist</a>
+             <a href="/Cart.html"> <i class="fa-solid fa-cart-shopping"></i>Cart</a>
+           </div>
+         </div>
+        <div class="bottom-nav">
+          <a href="#">Stores Near Me</a>
+          <a href="./product.html">All Products</a>
+          <a href="./fashion.html">Fashion</a>
+          <a href="./makeup.html">Beauty & Personal Care</a>
+          <a href="./home_decor.html">Home Decor</a>
+          <a href="./electronic.html">Electronics</a>
+        </div>
+      </nav>
+  
+    <div class="nav">
+      <div id="product-container" >
+        <!-- Here Append All the cart Products  -->
+      </div>
+
+      <div class="placeorder">
+        <button>Place Order</button>
+      </div>
+
+    </div>
+    <div id="f-main">
+      <footer>
+     <div class="f-cont">
+      <div class="f-row">
+      <div class="col" id="about">
+          <h3>About Us</h3>
+          <p>India's most convenient online grocery channel Buyerapp Fresh and Smart makes your grocery shopping even simpler. We offer you the convenience of shopping for everything that you need for your home - be it fresh fruits & vegetables, rice, dals, oil, packaged food, dairy item, frozen, pet food, household cleaning items & personal care products from a single virtual store.</p>
+         <div class="s-media">
+           <a href=""><i class="fa fa-facebook"></i></a>
+           <a href=""><i class="fa fa-instagram"></i></a>
+           <a href=""><i class="fa fa-twitter"></i></a>
+           <a href=""><i class="fa fa-youtube"></i></a>
+         </div>
+      </div>
+      <div class="col" id="company">
+          <h3>OUR COMPANY</h3>
+          <div class="link">
+              <a href="">About Us</a>
+              <a href="">Contact Us</a>
+          </div>
+      </div>
+      <div class="col" id="category">
+          <h3>TOP CATEGORIES</h3>
+          <div class="link">
+              <a href="./fashion.html">Fashion</a>
+              <a href="./electronic.html">Electronics</a>
+              <a href="#">Grocery</a>
+          </div>
+      </div>
+      <div class="col" id="policy">
+          <h3>POLICIES & INFO</h3>
+          <div class="link">
+              <a href="">Privacy Policy</a>
+              <a href="">SUPPORT</a>
+              <a href="">For Help, email to care@craftsvilla.com</a>
+          </div>
+      </div>
+      </div>
+     </div>
+      </footer>
+   </div>
+
+  </body>
+  <script>
+    // Write all necessery JS here
+
+    let placeorder= document.querySelector(".placeorder>button")
+    placeorder.addEventListener("click",()=>{
+        alert("Order Placed")
+        localStorage.clear()
+        location.reload()
+      })
+
+  
+    let CartContainer = document.getElementById("product-container");
+  
+    let Cart = JSON.parse(localStorage.getItem("cart")) || [];
+  
+    function DisplayProduct() {
+      let originalprice = document.getElementById("originalprice");
+      let savings = document.getElementById("savings");
+      let delivery = document.getElementById("delivery");
+      let tax = document.getElementById("tax");
+      let total = document.getElementById("total");
+  
+      CartContainer.innerHTML = "";
+
+      
+  
+      Cart.forEach((product) => {
+        let image = document.createElement("img");
+        let details = document.createElement("p");
+        let price = document.createElement("h3");
+        let Remove = document.createElement("button");
+        let Increase = document.createElement("button");
+        let Decrease = document.createElement("button");
+        let card = document.createElement("div");
+        let quantity = document.createElement("span");
+  
+        image.src = product.image;
+        details.textContent = product.title;
+        price.textContent =  ("Price "+(product.price * product.quantity) +" For "+ product.quantity +" pice");
+        Remove.textContent = "Remove";
+        quantity.textContent = product.quantity + " pic";
+
+        
+        card.append(
+          image,
+          details,
+          quantity,
+          price,
+        );
+        CartContainer.append(card);
+      });
+  
+      let sum = 0;
+      for (let i = 0; i < Cart.length; i++) {
+        sum += Cart[i].price * Cart[i].quantity;
+      }
+
+      originalprice.textContent = Math.floor(sum);
+      savings.textContent = Math.floor(sum * 0.05);
+      delivery.textContent = sum;
+      tax.textContent = Math.floor(sum * 0.1);
+
+      total.textContent = eval(Math.floor(sum - sum * 0.05 + sum * 0.1));
+
+      location.reload()
+    }
+
+    
+  
+    DisplayProduct();
+    
+  
+let search = document.getElementById("search");
+let search_btn = document.getElementById("search-btn");
+
+search_btn.addEventListener("click", function(){
+  console.log(search.value.toUpperCase() == "FASHION");
+  if(search.value.toUpperCase() == "PRODUCT"){
+    // window.open("product.html")
+    location.href="/product.html"
+  }
+  if(search.value.toUpperCase() == "FASHION"){
+    // window.open("fashion.html")
+    location.href="/fashion.html"
+    // redirect();
+  }
+  if(search.value.toUpperCase() == "BEAUTY"){
+    // window.open("makeup.html")
+    location.href="/makeup.html"
+  }
+  search.value = "";
+})
+// function redirect(){
+//   location.href="/fashion.html";
+// }
+
+
+search.addEventListener("search", function(){
+  if(search.value.toUpperCase() == "PRODUCT"){
+    // window.open("product.html")
+    location.href="/product.html"
+  }
+  if(search.value.toUpperCase() == "FASHION"){
+    // window.open("fashion.html")
+    location.href="/fashion.html"
+  }
+  if(search.value.toUpperCase() == "BEAUTY"){
+    // window.open("makeup.html")
+    location.href="/product.html"
+  }
+  search.value = "";
+})
+
+    // <-- Navbar JS -->
+
+let f_name = JSON.parse(sessionStorage.getItem("name"));
+let sign_in = document.getElementById("sign-in");
+
+// sign_in.innerText = "";
+sign_in.innerText = f_name[f_name.length-1];
+    // Write all necessery JS here
+  </script>
+</html>
